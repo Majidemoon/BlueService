@@ -1,6 +1,6 @@
 from BlueService.models import Settings
 from BlueService.database import SessionLocal
-from BlueService import logger
+from BlueService.logger import logger
 import traceback
 
 class Connected:

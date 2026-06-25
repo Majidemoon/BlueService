@@ -1,6 +1,19 @@
 # Virtual Enviroment
 venv
-
+BlueService/__pycache__
 
 # Test Files
 test.py
+
+# DataBase
+*.db
+
+# Logs
+*.log
+
+# Configs
+.env
+
+# Sessions
+*.session
+*.session-journal

@@ -1,7 +1,6 @@
 import glob
 from pathlib import Path
 from BlueService.utils import load_plugins
-import logging
 from BlueService import app
 from BlueService.scheduler import start_scheduler
 import asyncio

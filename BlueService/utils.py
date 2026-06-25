@@ -7,6 +7,7 @@ import jdatetime
 from datetime import date, datetime
 from BlueService import app
 from BlueService import settings
+from BlueService.config import OWNER
 
 def load_plugins(plugin_name):
     path = Path(f"BlueService/plugins/{plugin_name}.py")
@@ -16,6 +17,7 @@ def load_plugins(plugin_name):
     load.logger = logging.getLogger(plugin_name)
     load.app = app
     load.settings = settings
+    load.OWNER = OWNER
     sys.modules["BlueService.plugins." + plugin_name] = load
     spec.loader.exec_module(load)
     print("BlueService has Imported " + plugin_name)
