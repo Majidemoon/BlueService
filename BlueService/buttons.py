@@ -64,6 +64,9 @@ def admin_markup():
             ],
             [
                 InlineKeyboardButton("🔄 ریستارت", callback_data="restart_bot")
+            ],
+            [
+                InlineKeyboardButton("🔙 بازگشت", callback_data="back_to_menu")
             ]
         ]
 
