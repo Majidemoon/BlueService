@@ -27,6 +27,9 @@ class SettingsHelper(Connected):
                 pass
             with self.get_connection() as conn:
                 settings = conn.query(Settings).first()
+                if not settings:
+                    self.create_settings()
+                    settings = conn.query(Settings).first()
                 self._cache = settings
                 return settings
         except Exception:

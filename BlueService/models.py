@@ -16,6 +16,7 @@ class Settings(Base):
     __tablename__ = "settings"
     id = Column(Integer, primary_key=True)
     support_group_id = Column(Integer)
+    support_username = Column(Text)
     wellcome_message = Column(Text)
     help_text = Column(Text)
     min_increase = Column(Integer)
@@ -24,6 +25,7 @@ class Settings(Base):
     backup_topic = Column(Integer)
     bot_status = Column(Integer) # 1 : on, 0 : off
     topic_group = Column(Integer)
+    buy_report_channel = Column(Integer)
 
 class ForcedJoinChannels(Base):
     __tablename__ = "forced_join_channels"

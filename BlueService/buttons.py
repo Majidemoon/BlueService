@@ -40,7 +40,7 @@ def start_markup(user_id : int) -> InlineKeyboardMarkup:
 
 
 def admin_markup():
-
+    
     settings = settings_helper.get_settings()
 
     buttons = [
@@ -90,3 +90,33 @@ def admin_forced_join_edit_markup():
     markup.append([InlineKeyboardButton("🔙 بازگشت", callback_data="admin_panel")])
 
     return InlineKeyboardMarkup(markup)
+
+def setting_markup():
+
+    markup = InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton("متن استارت", callback_data="start_text"),
+                InlineKeyboardButton("متن راهنما", callback_data="help_text")
+            ],
+            [
+                InlineKeyboardButton("گروه پشتیبانی", callback_data="support_group"),
+                InlineKeyboardButton("آیدی پشتیبانی", callback_data="support_id")
+            ],
+            [
+                InlineKeyboardButton("حداقل افزایش موجودی", callback_data="min_increase"),
+                InlineKeyboardButton("حداکثر افزایش موجودی", callback_data="max_increase") 
+            ],
+            [
+                InlineKeyboardButton("چنل گزارش خرید", callback_data="buy_report_channel")
+            ],
+            [
+                InlineKeyboardButton('گروه گزارشات', callback_data="topic_group")
+            ],
+            [
+                InlineKeyboardButton("🔙 بازگشت", callback_data="admin_panel")
+            ]
+        ]
+    )
+
+    return markup
