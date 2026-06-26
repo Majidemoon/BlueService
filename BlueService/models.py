@@ -6,7 +6,6 @@ from sqlalchemy.orm import relationship
 
 class Users(Base):
     __tablename__ = "users"
-    id = Column(Integer)
     user_id = Column(Integer, primary_key=True)
     balance = Column(Float)
     status = Column(Integer)
@@ -24,6 +23,7 @@ class Settings(Base):
     charge_report_topic = Column(Integer)
     backup_topic = Column(Integer)
     bot_status = Column(Integer) # 1 : on, 0 : off
+    topic_group = Column(Integer)
 
 class ForcedJoinChannels(Base):
     __tablename__ = "forced_join_channels"
@@ -42,7 +42,6 @@ class Admins(Base):
     __tablename__ = "admins"
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer)
-    status = Column(Integer)
 
 # Create tables
 Base.metadata.create_all(engine)

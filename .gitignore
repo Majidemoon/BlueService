@@ -1,6 +1,7 @@
 # Virtual Enviroment
 venv
 BlueService/__pycache__
+BlueService/plugins/__pycache__
 
 # Test Files
 test.py

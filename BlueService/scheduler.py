@@ -1,11 +1,8 @@
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from BlueService import app, anti_spam_list
+from BlueService import app, anti_spam_list, settings_helper
 from BlueService.config import OWNER
-from BlueService.sql_helpers import SettingsHelper
 from datetime import datetime, timedelta
 from BlueService.utils import jalali_time
-
-settings_helper = SettingsHelper()
 
 async def anti_spam():
     try:

@@ -20,4 +20,4 @@ with engine.connect() as conn:
 
 app = Client('mainbot', API_ID, API_HASH, bot_token=BOT_TOKEN)
 
-settings = SettingsHelper()
+settings_helper = SettingsHelper()
