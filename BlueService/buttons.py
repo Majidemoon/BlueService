@@ -1,10 +1,11 @@
 from pyrogram.types import ReplyKeyboardMarkup, InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.enums import ButtonStyle
-from BlueService.sql_helpers import AdminsHelper
+from BlueService.sql_helpers import AdminsHelper, ForcedJoinChannelsHelper
 from BlueService.config import OWNER
 from BlueService import settings_helper
 
 admins_helper = AdminsHelper()
+forced_join_channels_helper = ForcedJoinChannelsHelper()
 
 def start_markup(user_id : int) -> InlineKeyboardMarkup:
     markup = [
@@ -75,3 +76,17 @@ def admin_markup():
     )
 
     return markup
+
+def admin_forced_join_edit_markup():
+    markup = [
+        [InlineKeyboardButton("➕ افزودن کانال", callback_data="add_forced_join_channel")],
+    ]
+
+    channels = forced_join_channels_helper.get_forced_join_channels()
+
+    for channel in channels:
+        markup.append([InlineKeyboardButton(f"{channel.channel_name}", callback_data=f"forced_join_channel_{channel.id}")])
+
+    markup.append([InlineKeyboardButton("🔙 بازگشت", callback_data="admin_panel")])
+
+    return InlineKeyboardMarkup(markup)
