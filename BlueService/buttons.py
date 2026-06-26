@@ -2,6 +2,7 @@ from pyrogram.types import ReplyKeyboardMarkup, InlineKeyboardButton, InlineKeyb
 from pyrogram.enums import ButtonStyle
 from BlueService.sql_helpers import AdminsHelper
 from BlueService.config import OWNER
+from BlueService import settings_helper
 
 admins_helper = AdminsHelper()
 
@@ -35,3 +36,39 @@ def start_markup(user_id : int) -> InlineKeyboardMarkup:
     
 
     return InlineKeyboardMarkup(markup)
+
+
+def admin_markup():
+
+    settings = settings_helper.get_settings()
+
+    buttons = [
+            [
+                InlineKeyboardButton("📈 آمار ربات", callback_data="statistics"),
+                InlineKeyboardButton("👤 مدیریت کاربر", callback_data="manage_users")
+            ],
+            [
+                InlineKeyboardButton("⚙️ تنظیمات ربات", callback_data="settings"),
+                InlineKeyboardButton("🧾 تنظیمات پلن ها", callback_data="main_plans_settings")
+            ],
+            [
+                InlineKeyboardButton("🚀 پیام همگانی", callback_data="broadcast"),
+                InlineKeyboardButton("📋 جوین اجباری", callback_data="forced_join")
+            ],
+            [
+                InlineKeyboardButton("ادمین", callback_data="manage_admins")
+            ],
+            [
+                InlineKeyboardButton("وضعیت ربات 🤖", callback_data="bot_status"),
+                InlineKeyboardButton("🟢" if settings.bot_status == 1 else "🔴", callback_data="bot_status")
+            ],
+            [
+                InlineKeyboardButton("🔄 ریستارت", callback_data="restart_bot")
+            ]
+        ]
+
+    markup = InlineKeyboardMarkup(
+        buttons
+    )
+
+    return markup
