@@ -175,7 +175,7 @@ class AdminsHelper(Connected):
             traceback.print_exc()
             return
         
-    def get_admin(self, id : int, ) -> Admins:
+    def get_admin(self, id : int) -> Admins:
         try:
             with self.get_connection() as conn:
                 admin = conn.query(Admins).filter_by(id=id).first()
