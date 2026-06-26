@@ -45,5 +45,20 @@ class Admins(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer)
 
+class Tickets(Base):
+    __tablename__ = "tickets"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer)
+    text = Column(Text)
+    datetime = Column(DATETIME)
+
+class TicketReplies(Base):
+    __tablename__ = "tickets_replies"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    ticket_id = Column(Integer, ForeignKey("tickets.id", ondelete="CASCADE"))
+    user_id = Column(Integer)
+    text = Column(Text)
+    datetime = Column(DATETIME)
+
 # Create tables
 Base.metadata.create_all(engine)

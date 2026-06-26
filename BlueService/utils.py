@@ -4,7 +4,7 @@ from pathlib import Path
 import importlib
 from datetime import datetime
 import jdatetime
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
 def load_plugins(plugin_name):
     path = Path(f"BlueService/plugins/{plugin_name}.py")
@@ -29,3 +29,27 @@ def progress_bar(iteration, total, prefix='', suffix='', decimals=1, length=20, 
     bar = fill * filled_length + '▒' * (length - filled_length)
     msg = f'\r{prefix} |{bar}| {percent}% {suffix}'
     return msg
+
+def time_formatter(td : timedelta = None, miliseconds : int = None):
+    if td is not None:
+        total_seconds = td.total_seconds()
+        milliseconds = total_seconds * 1000
+    else:
+        milliseconds = miliseconds
+    minutes, seconds = divmod(int(milliseconds / 1000), 60)
+    hours, minutes = divmod(minutes, 60)
+    days, hours = divmod(hours, 24)
+    weeks, days = divmod(days, 7)
+    tmp = (
+        ((str(weeks) + " هفته:") if weeks else "")
+        + ((str(days) + " روز:") if days else "")
+        + ((str(hours) + " ساعت:") if hours else "")
+        + ((str(minutes) + " دقیقه:") if minutes else "")
+        + ((str(seconds) + " ثانیه") if seconds else "")
+    )
+    if not tmp:
+        return "0 ثانیه"
+
+    if tmp.endswith(":"):
+        return tmp[:-1]
+    return tmp

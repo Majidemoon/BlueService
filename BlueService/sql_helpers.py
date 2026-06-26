@@ -1,4 +1,4 @@
-from BlueService.models import Settings, ForcedJoinUsers, ForcedJoinChannels, Admins, Users
+from BlueService.models import Settings, ForcedJoinUsers, ForcedJoinChannels, Admins, Users, Tickets, TicketReplies
 from BlueService.database import SessionLocal
 from BlueService.logger import logger
 import traceback
@@ -319,3 +319,49 @@ class UsersHelper(Connected):
             logger.error(f"Error changing user status")
             traceback.print_exc()
             return 0
+
+class TicketsHelper(Connected):
+
+    def get_ticket(self, id : int) -> Tickets:
+        try:
+            with self.get_connection() as conn:
+                ticket = conn.query(Tickets).filter_by(id=id).first()
+                return ticket
+        except Exception:
+            logger.error(f"Error getting ticket")
+            traceback.print_exc()
+            return
+    
+    def insert_ticket(self, user_id : int, text : str) -> Tickets:
+        try:
+            with self.get_connection() as conn:
+                ticket = Tickets(user_id=user_id, text=text, datetime=datetime.now())
+                conn.add(ticket)
+                conn.commit()
+                conn.refresh(ticket)
+                return ticket
+        except Exception:
+            logger.error(f"Error inserting ticket")
+            traceback.print_exc()
+
+    def get_user_last_ticket(self, user_id : int) -> Tickets:
+        try:
+            with self.get_connection() as conn:
+                ticket = conn.query(Tickets).filter_by(user_id=user_id).order_by(Tickets.id.desc()).first()
+                return ticket
+        except Exception:
+            logger.error(f"Error getting user last ticket")
+            traceback.print_exc()
+            return
+        
+class TicketRepliesHelper(Connected):
+
+    def insert_ticket_reply(self, ticket_id : int, text : str, user_id : int) -> None:
+        try:
+            with self.get_connection() as conn:
+                ticket_reply = TicketReplies(ticket_id=ticket_id, user_id=user_id, text=text, datetime=datetime.now())
+                conn.add(ticket_reply)
+                conn.commit()
+        except Exception:
+            logger.error(f"Error inserting ticket reply")
+            traceback.print_exc()
