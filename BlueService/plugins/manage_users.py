@@ -53,7 +53,7 @@ async def information_user(client: Client, callback_query: CallbackQuery):
 
 ⏳ تاریخ عضویت : {jalali_time(user.join_date).strftime("%Y-%m-%d")}
 
-💰 موجودی : {user.balance}
+💰 موجودی : {user.balance:,}
 
 💎 وضعیت احراز : {'✅' if user.is_verified == 1 else '❌'}"""
     
@@ -95,7 +95,7 @@ async def manage_users(client: Client, message: Message):
 
 ⏳ تاریخ عضویت : {jalali_time(user.join_date).strftime("%Y-%m-%d")}
 
-💰 موجودی : {user.balance}
+💰 موجودی : {user.balance:,}
 
 💎 وضعیت احراز : {'✅' if user.is_verified == 1 else '❌'}
 """

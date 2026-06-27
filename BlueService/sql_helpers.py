@@ -1,4 +1,4 @@
-from BlueService.models import Settings, ForcedJoinUsers, ForcedJoinChannels, Admins, Users, Tickets, TicketReplies
+from BlueService.models import Settings, ForcedJoinUsers, ForcedJoinChannels, Admins, Users, Tickets, TicketReplies, ChargeWallet
 from BlueService.database import SessionLocal
 from BlueService.logger import logger
 import traceback
@@ -247,7 +247,7 @@ class UsersHelper(Connected):
             traceback.print_exc()
             return None
     
-    def update_balance(self, user_id : int, balance : float) -> None:
+    def update_balance(self, user_id : int, balance : int) -> None:
         try:
             with self.get_connection() as conn:
                 user = conn.query(Users).filter_by(user_id=user_id).first()
@@ -283,11 +283,11 @@ class UsersHelper(Connected):
             traceback.print_exc()
             return None
         
-    def users_total_balance(self) -> float:
+    def users_total_balance(self) -> int:
         try:
             with self.get_connection() as conn:
                 users_total_balance = conn.query(func.sum(Users.balance)).scalar()
-                return round(float(users_total_balance), 1)
+                return int(users_total_balance)
         except Exception:
             logger.error(f"Error getting users total balance")
             traceback.print_exc()
@@ -365,3 +365,36 @@ class TicketRepliesHelper(Connected):
         except Exception:
             logger.error(f"Error inserting ticket reply")
             traceback.print_exc()
+
+class ChargeWalletHelper(Connected):
+
+    def insert_charge(self, user_id: int, type: str, amount: int, currency_price: int = None, hash: str = None, status: int = 1) -> None:
+        try:
+            with self.get_connection() as conn:
+                charge = ChargeWallet(
+                    user_id=user_id, 
+                    type=type, 
+                    amount=amount,
+                    currency_price=currency_price,
+                    hash=hash,
+                    status=status,
+                    date=datetime.now()
+                    )
+                conn.add(charge)
+                conn.commit()
+        except Exception:
+            logger.error(f"Error inserting ChargeWallet")
+            traceback.print_exc()
+
+    def get_users_total_charge_amount(self, type : str) -> int:
+        try:
+            with self.get_connection() as conn:
+                users_total_charge_amount = conn.query(func.sum(ChargeWallet.amount))
+                if type != 'All':
+                    users_total_charge_amount.filter_by(type=type)
+                users_total_charge_amount = users_total_charge_amount.scalar()
+                return users_total_charge_amount if users_total_charge_amount is not None else 0
+        except Exception:
+            logger.error(f"Error getting users total charge amount")
+            traceback.print_exc()
+            return

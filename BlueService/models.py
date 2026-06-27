@@ -60,5 +60,16 @@ class TicketReplies(Base):
     text = Column(Text)
     datetime = Column(DATETIME)
 
+class ChargeWallet(Base):
+    __tablename__ = "charge_wallet"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer)
+    type = Column(Text)
+    amount = Column(Integer)
+    currency_price = Column(Float)
+    date = Column(DATETIME)
+    hash = Column(Text)
+    status = Column(Integer)
+
 # Create tables
 Base.metadata.create_all(engine)

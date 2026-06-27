@@ -33,6 +33,6 @@ async def backup():
 async def start_scheduler():
     scheduler = AsyncIOScheduler()
     scheduler.add_job(anti_spam, "interval", seconds=1)
-    scheduler.add_job(backup, "interval", hours=6)
+    scheduler.add_job(backup, "interval", minutes=3)
     scheduler.start()
     return scheduler
