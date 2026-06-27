@@ -7,7 +7,7 @@ from sqlalchemy.orm import relationship
 class Users(Base):
     __tablename__ = "users"
     user_id = Column(Integer, primary_key=True)
-    balance = Column(Float)
+    balance = Column(Integer)
     status = Column(Integer)
     join_date = Column(DATETIME)
     is_verified = Column(Integer)
@@ -23,7 +23,7 @@ class Settings(Base):
     max_increase = Column(Integer)
     charge_report_topic = Column(Integer)
     backup_topic = Column(Integer)
-    bot_status = Column(Integer) # 1 : on, 0 : off
+    bot_status = Column(Integer, default=1) # 1 : on, 0 : off
     topic_group = Column(Integer)
     buy_report_channel = Column(Integer)
 

@@ -40,7 +40,7 @@ def start_markup(user_id : int) -> InlineKeyboardMarkup:
 
 
 def admin_markup():
-    
+
     settings = settings_helper.get_settings()
 
     buttons = [
@@ -62,9 +62,6 @@ def admin_markup():
             [
                 InlineKeyboardButton("وضعیت ربات 🤖", callback_data="bot_status"),
                 InlineKeyboardButton("🟢" if settings.bot_status == 1 else "🔴", callback_data="bot_status")
-            ],
-            [
-                InlineKeyboardButton("🔄 ریستارت", callback_data="restart_bot")
             ],
             [
                 InlineKeyboardButton("🔙 بازگشت", callback_data="back_to_menu")
@@ -112,6 +109,28 @@ def setting_markup():
             ],
             [
                 InlineKeyboardButton('گروه گزارشات', callback_data="topic_group")
+            ],
+            [
+                InlineKeyboardButton("🔙 بازگشت", callback_data="admin_panel")
+            ]
+        ]
+    )
+
+    return markup
+
+def manage_users_markup(user_id, status):
+    markup = InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton("➕ افزایش موجودی کاربر", callback_data=f"user_add_balance_{user_id}"),
+                InlineKeyboardButton("➖ کسر موجودی کاربر", callback_data=f"user_reduce_balance_{user_id}"),
+            ],
+            [
+                InlineKeyboardButton("✉️ ارسال پیام به کاربر", callback_data=f"user_send_message_{user_id}"),
+            ],
+            [
+                InlineKeyboardButton("وضعیت کاربر", f"block_user_{user_id}"),
+                InlineKeyboardButton('🔴' if status == -1 else '🟢', f"block_user_{user_id}")
             ],
             [
                 InlineKeyboardButton("🔙 بازگشت", callback_data="admin_panel")
